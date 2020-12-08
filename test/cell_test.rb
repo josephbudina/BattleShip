@@ -17,11 +17,10 @@ class CellTest < Minitest::Test
   end
 
   def test_cell_is_empty
-    assert_equal false, @cell.empty?
+    assert_equal true, @cell.empty?
   end
 
   def test_place_ship_in_cell
-    skip
     @cell.place_ship(@cruiser)
 
     assert_instance_of Ship, @cell.ship
