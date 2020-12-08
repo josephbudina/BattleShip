@@ -13,7 +13,19 @@ class CellTest < Minitest::Test
   def test_cell_exists_with_attributes
     assert_instance_of Cell, @cell
     assert_equal 'B4', @cell.coordinate
-    assert_nil @cell.ship 
+    assert_nil @cell.ship
+  end
+
+  def test_cell_is_empty
+    assert_equal true, @cell.empty?
+  end
+
+  def test_place_ship_in_cell
+    @cell.place_ship(@cruiser)
+
+    assert_instance_of Ship, @cell.ship
+
+    assert_equal false, @cell.empty?
   end
 
 
