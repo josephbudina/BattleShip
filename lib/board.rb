@@ -27,6 +27,36 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    ship.length == coordinates.length
+    ship.length == coordinates.length &&
+    consecutive_letters_and_numbers?(coordinates)
+  end
+
+  def split_letters(coordinates)
+    coordinates.map do |coordinate|
+      coordinate[0].ord
+    end
+  end
+
+  def split_numbers(coordinates)
+    coordinates.map do |coordinate|
+      coordinate[1].to_i
+    end
+  end
+
+  def consecutive_letters?(coordinates)
+    split_letters(coordinates).each_cons(2).all? do |letter1, letter2|
+      letter1 == letter2 || (letter1 + 1) == letter2
+    end
+  end
+
+  def consecutive_numbers?(coordinates)
+    split_numbers(coordinates).each_cons(2).all? do |number1, number2|
+      number1 == number2 || (number1 + 1) == number2
+    end
+  end
+
+  def consecutive_letters_and_numbers?(coordinates)
+    consecutive_letters?(coordinates) &&
+    consecutive_numbers?(coordinates)
   end
 end
