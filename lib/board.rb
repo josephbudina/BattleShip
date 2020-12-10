@@ -93,4 +93,20 @@ class Board
       @cells[cell].empty?
     end
   end
+
+  def render(ship_reveal = false)
+    horizontal = [1, 2, 3, 4]
+    vertical = ["A", "B", "C", "D"]
+    board = "  "
+    horizontal.each do |number|
+      board += number.to_s + ' '
+    end
+    vertical.each do |letter|
+      board += "\n#{letter} "
+      horizontal.each do |number|
+        board += "#{@cells["#{letter}#{number}"].render(ship_reveal)} "
+      end
+    end
+    board + "\n"
+  end
 end
