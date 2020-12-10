@@ -33,11 +33,11 @@ class BoardTest < Minitest::Test
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2"])
     assert_equal false, @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
   end
-  
+
   def test_it_can_split_letters
     assert_equal [65, 65, 65], @board.split_letters(["A1", "A2", "A4"])
   end
-  
+
   def test_it_can_split_numbers
     assert_equal [1, 2, 4], @board.split_numbers(["A1", "A2", "A4"])
   end
@@ -46,7 +46,7 @@ class BoardTest < Minitest::Test
     assert_equal true, @board.consecutive_letters?(["A1", "B2", "C4"])
     assert_equal false, @board.consecutive_letters?(["A1", "C2", "C4"])
   end
-  
+
   def test_numbers_consecutive
     assert_equal false, @board.consecutive_numbers?(["A1", "B2", "C4"])
     assert_equal true, @board.consecutive_numbers?(["A1", "B2", "C3"])
@@ -68,5 +68,15 @@ class BoardTest < Minitest::Test
     assert_equal false, @board.valid_placement?(@cruiser, ["A3", "A2", "A1"])
 
     assert_equal false, @board.valid_placement?(@submarine, ["C1", "B1"])
+
+    assert_equal true, @board.valid_placement?(@submarine, ["A1", "A2"])
+
+    assert_equal true, @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
+  end
+
+  def test_placement_cannot_be_diagonal
+    assert_equal false, @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
+    assert_equal false, @board.valid_placement?(@submarine, ["C3", "D4"])
+    assert_equal true, @board.valid_placement?(@submarine, ["A1", "B1"])
   end
 end
