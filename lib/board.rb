@@ -29,7 +29,8 @@ class Board
   def valid_placement?(ship, coordinates)
     ship.length == coordinates.length &&
     consecutive_letters_and_numbers?(coordinates) &&
-    diagonal_letters_and_numbers?(coordinates)
+    diagonal_letters_and_numbers?(coordinates) &&
+    overlap?(coordinates)
   end
 
   def split_letters(coordinates)
@@ -61,8 +62,6 @@ class Board
     consecutive_numbers?(coordinates)
   end
 
-  # Begin Diagonal Methods ------------
-
   def diagonal_letters?(coordinates)
     split_letters(coordinates).each_cons(2).all? do |letter1, letter2|
       (letter1 + 1) == letter2
@@ -83,11 +82,15 @@ class Board
     end
   end
 
-  # Begin place-ship method(s)
-
   def place(ship, coordinates)
     coordinates.each do |coordinate|
       @cells[coordinate].place_ship(ship)
+    end
+  end
+
+  def overlap?(coordinates)
+    coordinates.all? do |cell|
+      @cells[cell].empty?
     end
   end
 end
