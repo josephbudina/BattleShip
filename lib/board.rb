@@ -29,7 +29,7 @@ class Board
   def valid_placement?(ship, coordinates)
     ship.length == coordinates.length &&
     consecutive_letters_and_numbers?(coordinates) &&
-    diagonal_letters_and_numbers?(coordinates) == false
+    diagonal_letters_and_numbers?(coordinates)
   end
 
   def split_letters(coordinates)
@@ -76,7 +76,10 @@ class Board
   end
 
   def diagonal_letters_and_numbers?(coordinates)
-    diagonal_letters?(coordinates) &&
-    diagonal_numbers?(coordinates)
+    if diagonal_letters?(coordinates) && diagonal_numbers?(coordinates)
+      false
+    else
+      true
+    end
   end
 end
