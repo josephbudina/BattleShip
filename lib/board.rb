@@ -82,4 +82,12 @@ class Board
       true
     end
   end
+
+  # Begin place-ship method(s)
+
+  def place(ship, coordinates)
+    coordinates.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
+    end
+  end
 end
