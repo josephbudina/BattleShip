@@ -95,15 +95,15 @@ class Board
   end
 
   def render(ship_reveal = false)
-    horizontal = [1, 2, 3, 4]
-    vertical = ["A", "B", "C", "D"]
+    x_axis = [1, 2, 3, 4]
     board = "  "
-    horizontal.each do |number|
+    x_axis.each do |number|
       board += number.to_s + ' '
     end
-    vertical.each do |letter|
+    y_axis = ["A", "B", "C", "D"]
+    y_axis.each do |letter|
       board += "\n#{letter} "
-      horizontal.each do |number|
+      x_axis.each do |number|
         board += "#{@cells["#{letter}#{number}"].render(ship_reveal)} "
       end
     end
