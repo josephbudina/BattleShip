@@ -18,4 +18,9 @@ class BoardTest < Minitest::Test
     assert_instance_of Player, @player
     assert_equal @ship_array, @player.ship_array
   end
+
+  def test_player_can_place_ships
+    assert_equal ["B1", "C1", "D1"], @player.place_ships(@cruiser, ["B1", "C1", "D1"])
+    assert_equal "Cannot Place Ship", @player.place_ships(@cruiser, ["A1", "C1", "D1"])
+  end
 end
