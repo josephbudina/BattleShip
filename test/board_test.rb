@@ -14,6 +14,10 @@ class BoardTest < Minitest::Test
   def test_it_exists_with_attributes
     assert_instance_of Board, @board
 
+    @board.cells.each do |coord, cell|
+      assert_instance_of Cell, cell
+      assert_instance_of String, coord
+    end
     assert_equal 16, @board.cells.length
   end
 
