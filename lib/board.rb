@@ -27,9 +27,9 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    ship.length == coordinates.length &&
-    consecutive_letters_and_numbers?(coordinates) &&
-    diagonal_letters_and_numbers?(coordinates) &&
+    return false unless ship.length == coordinates.length
+    return false unless consecutive_letters_and_numbers?(coordinates)
+    return false unless diagonal_letters_and_numbers?(coordinates)
     overlap?(coordinates)
   end
 
