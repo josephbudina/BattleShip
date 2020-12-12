@@ -48,9 +48,8 @@ class Computer
     get_random_placement_zone[start_index..(start_index + (ship.length - 1))]
   end
 
-  def place_ships(ship, coordinates)
-    if @board.valid_placement?(ship, coordinates)
-      @board.place(ship, coordinates)
-    end
+  def place_ships(ship)
+    coordinates = get_placement_coordinates(ship)
+    @board.place(ship, coordinates)
   end
 end
