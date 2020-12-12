@@ -7,8 +7,8 @@ require './lib/user'
 
 class UserTest < Minitest::Test
   def setup
-    @board      = Board.new
-    @user   = User.new
+    @board = Board.new
+    @user = User.new(@board)
   end
 
   def test_it_exists
