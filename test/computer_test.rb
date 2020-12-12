@@ -20,13 +20,11 @@ class ComputerTest < Minitest::Test
   end
 
   def test_computer_can_place_ships
-    assert_equal ["B1", "C1", "D1"], @computer.place_ships(@cruiser, ["B1", "C1", "D1"])
-    # assert_equal ["B1", "C1", "D1"], @computer.random_coordinates(@cruiser, 3)
+    assert_instance_of Array, @computer.place_ships(@cruiser)
   end
 
   def test_random_coords_are_valid
     assert_equal true, @computer.board.valid_placement?(@cruiser, @computer.get_placement_coordinates(@cruiser))
-    require "pry"; binding.pry
   end
 
 end
