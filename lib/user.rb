@@ -1,7 +1,7 @@
 class User
   attr_reader :board
 
-  def initialize
-    @board = Board.new
+  def initialize(board)
+    @board = board
   end
 end

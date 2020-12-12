@@ -10,7 +10,7 @@ class ComputerTest < Minitest::Test
     @board      = Board.new
     @cruiser    = Ship.new("Cruiser", 3)
     @submarine  = Ship.new("Submarine", 2)
-    @computer   = Computer.new
+    @computer   = Computer.new(@board)
   end
 
   def test_it_exists_with_attributes
