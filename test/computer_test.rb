@@ -26,5 +26,4 @@ class ComputerTest < Minitest::Test
   def test_random_coords_are_valid
     assert_equal true, @computer.board.valid_placement?(@cruiser, @computer.get_placement_coordinates(@cruiser))
   end
-
 end
