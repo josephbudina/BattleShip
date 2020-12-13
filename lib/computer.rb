@@ -6,7 +6,7 @@ class Computer
   end
 
   def random_coordinates(ship, length)
-    coordinates = []
+    coordinates = [@board.cells.keys.sample]
     until @board.valid_placement?(ship, coordinates)
       new_coordinates = @board.cells.keys.sample(length)
       coordinates = new_coordinates

@@ -46,23 +46,23 @@ class BoardTest < Minitest::Test
     assert_equal [1, 2, 4], @board.split_numbers(["A1", "A2", "A4"])
   end
 
-  def test_letters_consecutive
-    assert_equal true, @board.consecutive_letters?(["A1", "B2", "C4"])
-    assert_equal false, @board.consecutive_letters?(["A1", "C2", "C4"])
-  end
-
-  def test_numbers_consecutive
-    assert_equal false, @board.consecutive_numbers?(["A1", "B2", "C4"])
-    assert_equal true, @board.consecutive_numbers?(["A1", "B2", "C3"])
-  end
-
-  def test_numbers_and_letters_consecutive
-    assert_equal false, @board.consecutive_letters_and_numbers?(["A1", "A2", "A4"])
-    assert_equal true, @board.consecutive_letters_and_numbers?(["A1", "A2", "A3"])
-
-    assert_equal false, @board.consecutive_letters_and_numbers?(["A1", "C1"])
-    assert_equal true, @board.consecutive_letters_and_numbers?(["A1", "B1"])
-  end
+  # def test_letters_consecutive
+    # assert_equal true, @board.consecutive_letters?(["A1", "B2", "C4"])
+    # assert_equal false, @board.consecutive_letters?(["A1", "C2", "C4"])
+  # end
+#
+  # def test_numbers_consecutive
+    # assert_equal false, @board.consecutive_numbers?(["A1", "B2", "C4"])
+    # assert_equal true, @board.consecutive_numbers?(["A1", "B2", "C3"])
+  # end
+#
+  # def test_numbers_and_letters_consecutive
+    # assert_equal false, @board.consecutive_letters_and_numbers?(["A1", "A2", "A4"])
+    # assert_equal true, @board.consecutive_letters_and_numbers?(["A1", "A2", "A3"])
+#
+    # assert_equal false, @board.consecutive_letters_and_numbers?(["A1", "C1"])
+    # assert_equal true, @board.consecutive_letters_and_numbers?(["A1", "B1"])
+  # end
 
   def test_valid_placement_must_be_consecutive
     assert_equal false, @board.valid_placement?(@cruiser, ["A1", "A2", "A4"])
@@ -109,8 +109,25 @@ class BoardTest < Minitest::Test
 
     expected1 = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
     expected2 = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
-    
+
     assert_equal expected1, @board.render
     assert_equal expected2, @board.render(true)
+  end
+
+  def test_horizontal_validity
+    assert_equal true, @board.horizontal?(["A","A","A"], [1,2,3])
+    assert_equal false, @board.horizontal?(["A","B","C"], [1,2,3])
+    assert_equal false, @board.horizontal?(["A","B","C"], [1,1,1])
+    assert_equal false, @board.horizontal?(["A","A","A"], [1,1,1])
+    assert_equal false, @board.horizontal?(["A","A","A"], [3,2,1])
+  end
+
+  def test_vertical_validity
+    assert_equal true, @board.vertical?(["A","B","C"], [1,1,1])
+    assert_equal false, @board.vertical?(["A","A","A"], [1,1,1])
+    assert_equal false, @board.vertical?(["B","C","D"], [2,3,4])
+    assert_equal false, @board.vertical?(["A","A","A"], [1,1,1])
+    assert_equal false, @board.vertical?(["C","B","A"], [2,2,2])
+    assert_equal false, @board.vertical?(["A","B","C"], [1,2,3])
   end
 end
