@@ -28,8 +28,9 @@ class Board
 
   def valid_placement?(ship, coordinates)
     return false unless ship.length == coordinates.length
-    return false unless consecutive_letters_and_numbers?(coordinates)
-    return false unless diagonal_letters_and_numbers?(coordinates)
+    # return false unless consecutive_letters_and_numbers?(coordinates)
+    # return false unless diagonal_letters_and_numbers?(coordinates)
+    return false unless horizontal_or_vertical?(coordinates)
     overlap?(coordinates)
   end
 
@@ -42,6 +43,43 @@ class Board
   def split_numbers(coordinates)
     coordinates.map do |coordinate|
       coordinate[1].to_i
+    end
+  end
+
+  def horizontal_or_vertical?(coordinates)
+    letters = split_letters(coordinates)
+    numbers = split_numbers(coordinates)
+    horizontal?(letters, numbers) || vertical?(letters, numbers)
+  end
+
+  # letters must match and numbers increment
+  def horizontal?(letters, numbers)
+    init_letter = letters[0]
+    init_num    = numbers[0]
+
+    return false if numbers.uniq.length < numbers.length
+
+    return false unless letters.all? do |letter|
+      letter == init_letter
+    end
+
+    numbers.all? do |num|
+      num == init_num + (numbers.index(num))
+    end
+  end
+
+  def vertical?(letters, numbers)
+    init_letter = letters[0]
+    init_num    = numbers[0]
+
+    return false if letters.uniq.length < letters.length
+
+    return false unless letters.all? do |letter|
+      letter.ord == (init_letter.ord + (letters.index(letter)))
+    end
+
+    numbers.all? do |num|
+      num == init_num
     end
   end
 
