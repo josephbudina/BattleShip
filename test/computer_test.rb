@@ -20,10 +20,18 @@ class ComputerTest < Minitest::Test
   end
 
   def test_computer_can_place_ships
-    assert_instance_of Array, @computer.place_ships(@cruiser)
+    assert_instance_of Array, @computer.place_ship(@cruiser)
   end
 
   def test_random_coords_are_valid
-    assert_equal true, @computer.board.valid_placement?(@cruiser, @computer.get_placement_coordinates(@cruiser))
+    @computer.place_ship(@cruiser)
+    @computer.place_ship(@submarine)
+
+    assert_equal 5, @computer.board.render(true).count("S")
+
+    @computer.place_ship(@cruiser)
+    @computer.place_ship(@submarine)
+
+    assert_equal 10, @computer.board.render(true).count("S")
   end
 end
