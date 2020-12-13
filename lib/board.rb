@@ -28,8 +28,6 @@ class Board
 
   def valid_placement?(ship, coordinates)
     return false unless ship.length == coordinates.length
-    # return false unless consecutive_letters_and_numbers?(coordinates)
-    # return false unless diagonal_letters_and_numbers?(coordinates)
     return false unless horizontal_or_vertical?(coordinates)
     overlap?(coordinates)
   end
@@ -52,7 +50,6 @@ class Board
     horizontal?(letters, numbers) || vertical?(letters, numbers)
   end
 
-  # letters must match and numbers increment
   def horizontal?(letters, numbers)
     init_letter = letters[0]
     init_num    = numbers[0]
@@ -80,43 +77,6 @@ class Board
 
     numbers.all? do |num|
       num == init_num
-    end
-  end
-
-  def consecutive_letters?(coordinates)
-    split_letters(coordinates).each_cons(2).all? do |letter1, letter2|
-      letter1 == letter2 || (letter1 + 1) == letter2
-    end
-  end
-
-  def consecutive_numbers?(coordinates)
-    split_numbers(coordinates).each_cons(2).all? do |number1, number2|
-      number1 == number2 || (number1 + 1) == number2
-    end
-  end
-
-  def consecutive_letters_and_numbers?(coordinates)
-    consecutive_letters?(coordinates) &&
-    consecutive_numbers?(coordinates)
-  end
-
-  def diagonal_letters?(coordinates)
-    split_letters(coordinates).each_cons(2).all? do |letter1, letter2|
-      (letter1 + 1) == letter2
-    end
-  end
-
-  def diagonal_numbers?(coordinates)
-    split_numbers(coordinates).each_cons(2).all? do |number1, number2|
-      (number1 + 1) == number2
-    end
-  end
-
-  def diagonal_letters_and_numbers?(coordinates)
-    if diagonal_letters?(coordinates) && diagonal_numbers?(coordinates)
-      false
-    else
-      true
     end
   end
 
