@@ -10,8 +10,8 @@ class Game
                 :submarine
 
   def initialize
-    @cruiser = Ship.new("Cruiser", 3)
-    @submarine = Ship.new("Submarine", 2)
+    # @cruiser = Ship.new("Cruiser", 3)
+    # @submarine = Ship.new("Submarine", 2)
     @user_board = Board.new
     @computer_board = Board.new
     @computer = Computer.new(@computer_board)
@@ -23,10 +23,11 @@ class Game
     player_ship_type = gets.chomp.capitalize
     coords = gets.chomp.upcase
     if player_ship_type == "Cruiser"
-      print ">"
-      @user.place_ships(@cruiser, coords.split)
+      puts "Enter 3 coordinates for placement"
+      @user.place_ships(Ship.new("Cruiser", 3), coords.split)
     elsif player_ship_type == "Submarine"
-      @user.place_ships(@submarine, coords.split)
+      puts "Enter 2 coordinates for placement"
+      @user.place_ships(Ship.new("Submarine", 2), coords.split)
     end
     print "#{@user_board.render(true)}"
   end
@@ -37,8 +38,8 @@ class Game
     play_game = gets.chomp.downcase
 
     if play_game == "p"
-      @computer.place_ship(@cruiser)
-      @computer.place_ship(@submarine)
+      @computer.place_ship(Ship.new("Cruiser", 3))
+      @computer.place_ship(Ship.new("Submarine", 2))
       puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
       print "#{@user_board.render(true)}"
       print ">"
