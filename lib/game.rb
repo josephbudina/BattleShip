@@ -18,6 +18,19 @@ class Game
     @user = User.new(@user_board)
   end
 
+  def player_place_ship
+    puts "You have the choice of using two a cruiser and a submarine which do would you like to place first?"
+    player_ship_type = gets.chomp.capitalize
+    coords = gets.chomp.upcase
+    if player_ship_type == "Cruiser"
+      print ">"
+      @user.place_ships(@cruiser, coords.split)
+    elsif player_ship_type == "Submarine"
+      @user.place_ships(@submarine, coords.split)
+    end
+    print "#{@user_board.render(true)}"
+  end
+
   def start
     puts "     Welcome to BATTLESHIP\nEnter p to play. Enter q to quit."
     print ">"
@@ -28,19 +41,9 @@ class Game
       @computer.place_ship(@submarine)
       puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
       print "#{@user_board.render(true)}"
-      # @user.
-      # print "#{@computer_board.render(true)}"
       print ">"
-      player_ships = gets.chomp.capitalize
-      # placement_coords =
-      # player_ship_placer(player_ships)
-      coords = gets.chomp.upcase
-      if player_ships == "Cruiser"
-        @user.place_ships(@cruiser, coords.split)
-      elsif player_ships == "Submarine"
-        @user.place_ships(@cruiser, gets.chomp.upcase)
-      end
-      print "#{@user_board.render(true)}"
+
+      player_place_ship
     elsif play_game == "q"
     end
   end
