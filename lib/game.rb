@@ -28,6 +28,8 @@ class Game
     elsif player_ship_type == "Submarine"
       puts "Enter 2 coordinates for placement"
       @user.place_ships(Ship.new("Submarine", 2), coords.split)
+    elsif place_ships(Ship.new("Submarine", 2), coords.split) == "Not Valid Ship Placement"
+        @user.place_ships(Ship.new("Submarine", 2), coords.split)
     end
     print "#{@user_board.render(true)}"
   end
@@ -43,7 +45,6 @@ class Game
       puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
       print "#{@user_board.render(true)}"
       print ">"
-
       player_place_ship
     elsif play_game == "q"
     end
