@@ -18,21 +18,29 @@ class Game
     @user = User.new(@user_board)
   end
 
+  def get_coords
+    coords = (gets.chomp.upcase).split
+  end
+
+  def get_ship_choice
+    gets.chomp.capitalize
+  end
+
   def player_place_ship
-    puts "You have the choice of using two a cruiser and a submarine which do would you like to place first?"
+    puts "You have the choice of placing two ships: a cruiser and a submarine. Which would you like to place first?"
     player_ship_type = gets.chomp.capitalize
     coords = gets.chomp.upcase
     if player_ship_type == "Cruiser"
-      puts "Enter 3 coordinates for placement"
       @user.place_ships(Ship.new("Cruiser", 3), coords.split)
     elsif player_ship_type == "Submarine"
-      puts "Enter 2 coordinates for placement"
       @user.place_ships(Ship.new("Submarine", 2), coords.split)
     elsif place_ships(Ship.new("Submarine", 2), coords.split) == "Not Valid Ship Placement"
         @user.place_ships(Ship.new("Submarine", 2), coords.split)
     end
     print "#{@user_board.render(true)}"
   end
+
+
 
   def start
     puts "     Welcome to BATTLESHIP\nEnter p to play. Enter q to quit."
@@ -46,7 +54,11 @@ class Game
       print "#{@user_board.render(true)}"
       print ">"
       player_place_ship
+      @user.apply_enemy_shot(@computer.take_random_shot)
+      player_place_ship
+
     elsif play_game == "q"
+      puts "TERMINATING SESSION"
     end
   end
 end
