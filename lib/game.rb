@@ -14,20 +14,6 @@ class Game
     @user = User.new(@user_board)
   end
 
-  # def player_place_ship
-  #   puts "You have the choice of placing two ships: a cruiser and a submarine. Which would you like to place first?"
-  #   player_ship_type = gets.chomp.capitalize
-  #   coords = gets.chomp.upcase
-  #   if player_ship_type == "Cruiser"
-  #     @user.place_ships(Ship.new("Cruiser", 3), coords.split)
-  #   elsif player_ship_type == "Submarine"
-  #     @user.place_ships(Ship.new("Submarine", 2), coords.split)
-  #   elsif place_ships(Ship.new("Submarine", 2), coords.split) == "Not Valid Ship Placement"
-  #       @user.place_ships(Ship.new("Submarine", 2), coords.split)
-  #   end
-  #   print "#{@user_board.render(true)}"
-  # end
-
   def player_placement
     # need a valid coords check?
     coords = placement_prompt(@user.cruiser)
@@ -54,9 +40,15 @@ class Game
   end
 
   def user_turn
+    print "Enter coordinate to fire on enemy!\n"
     print ">"
-    @computer.apply_user_shot(gets.chomp.upcase)
-    print "#{@computer_board.render}"
+    coordinate = gets.chomp.upcase
+    if @computer_board.valid_coordinate?(coordinate)
+      @computer.apply_user_shot(coordinate)
+    elsif @computer_board.valid_coordinate?(coordinate) == false
+      print "Invalid coordinate, try again!\n"
+      user_turn
+    end
   end
 
 
@@ -64,12 +56,26 @@ class Game
     print ">"
     @user.apply_enemy_shot(@computer.take_random_shot)
   end
-  
+
+  def declare_winner
+    if @user.user_ships_health == 0
+      print "Game Over! All player ships sunk! Computer wins!\n\n"
+    elsif @computer.computer_ships_health == 0
+      print "Game Over! All enemy ships sunk! You win!\n\n"
+    end
+    start
+  end
+
   def play_game
     until @user.user_ships_health == 0 || @computer.computer_ships_health == 0
       user_turn
+      print " --- Enemy Board ---\n"
+      print "#{@computer_board.render}"
       computer_turn
+      print " ---  Your Board ---\n"
+      print "#{@user_board.render(true)}"
     end
+    declare_winner
   end
 
   def computer_places_ships
@@ -82,13 +88,13 @@ class Game
     print ">"
     play_game = gets.chomp.downcase
 
-    if play_game == "p"
+    if play_game == "q"
+      puts "TERMINATING SESSION"
+    else
       computer_places_ships
       puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
       print "#{@user_board.render}"
       player_placement
-    elsif play_game == "q"
-      puts "TERMINATING SESSION"
     end
   end
 end
