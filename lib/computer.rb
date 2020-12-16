@@ -1,10 +1,16 @@
 class Computer
-  attr_reader :available_coordinates
-
   attr_accessor :board
+
+  attr_reader   :cruiser,
+                :submarine,
+                :ships,
+                :available_coordinates
 
   def initialize(board)
     @board = board
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine  = Ship.new("Submarine", 2)
+    @ships = [@cruiser, @submarine]
     @available_coordinates = @board.cells.keys
   end
 
@@ -30,5 +36,11 @@ class Computer
 
   def take_random_shot
     @available_coordinates.shuffle!.delete_at(0)
+  end
+
+  def computer_ships_health
+    @ships.sum do |ship|
+      ship.health
+    end
   end
 end
