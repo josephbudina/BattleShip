@@ -10,7 +10,6 @@ class User
       @board.place(ship, coordinates)
     else
       false
-      # puts "Not Valid Ship Placement"
     end
   end
 

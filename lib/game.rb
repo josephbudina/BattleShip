@@ -5,9 +5,7 @@ class Game
     attr_reader :computer,
                 :computer_board,
                 :user,
-                :user_board,
-                :cruiser,
-                :submarine
+                :user_board
 
   def initialize
     @user_board = Board.new
@@ -67,13 +65,7 @@ class Game
       @computer.place_ship(Ship.new("Submarine", 2))
       puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
       print "#{@user_board.render}"
-
       player_placement
-
-
-      # @user.apply_enemy_shot(@computer.take_random_shot)
-      # player_place_ship
-
     elsif play_game == "q"
       puts "TERMINATING SESSION"
     end
