@@ -20,5 +20,15 @@ class UserTest < Minitest::Test
 
   def test_it_can_place_ships
     assert_equal ["A1", "B1", "C1"], @user.place_ships(@cruiser, ["A1", "B1", "C1"])
+    assert_equal false, @user.place_ships(@cruiser, ["A1", "B1", "q1"])
+  end
+
+  def test_it_applies_enemy_shot
+    assert_equal true, @user.apply_enemy_shot("A1")
+    @user.place_ships(@cruiser, ["A1", "B1", "C1"])
+    @user.apply_enemy_shot("A1")
+
+    assert_equal true, @user.board.cells["A1"].fired_upon?
+    assert_equal 2, @user.board.cells["A1"].ship.health
   end
 end
