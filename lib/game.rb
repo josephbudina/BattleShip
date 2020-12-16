@@ -18,14 +18,6 @@ class Game
     @user = User.new(@user_board)
   end
 
-  def get_coords
-    coords = (gets.chomp.upcase).split
-  end
-
-  def get_ship_choice
-    gets.chomp.capitalize
-  end
-
   def player_place_ship
     puts "You have the choice of placing two ships: a cruiser and a submarine. Which would you like to place first?"
     player_ship_type = gets.chomp.capitalize
