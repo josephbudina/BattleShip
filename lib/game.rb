@@ -14,31 +14,29 @@ class Game
     @user = User.new(@user_board)
   end
 
-  def player_place_ship
-    puts "You have the choice of placing two ships: a cruiser and a submarine. Which would you like to place first?"
-    player_ship_type = gets.chomp.capitalize
-    coords = gets.chomp.upcase
-    if player_ship_type == "Cruiser"
-      @user.place_ships(Ship.new("Cruiser", 3), coords.split)
-    elsif player_ship_type == "Submarine"
-      @user.place_ships(Ship.new("Submarine", 2), coords.split)
-    elsif place_ships(Ship.new("Submarine", 2), coords.split) == "Not Valid Ship Placement"
-        @user.place_ships(Ship.new("Submarine", 2), coords.split)
-    end
-    print "#{@user_board.render(true)}"
-  end
+  # def player_place_ship
+  #   puts "You have the choice of placing two ships: a cruiser and a submarine. Which would you like to place first?"
+  #   player_ship_type = gets.chomp.capitalize
+  #   coords = gets.chomp.upcase
+  #   if player_ship_type == "Cruiser"
+  #     @user.place_ships(Ship.new("Cruiser", 3), coords.split)
+  #   elsif player_ship_type == "Submarine"
+  #     @user.place_ships(Ship.new("Submarine", 2), coords.split)
+  #   elsif place_ships(Ship.new("Submarine", 2), coords.split) == "Not Valid Ship Placement"
+  #       @user.place_ships(Ship.new("Submarine", 2), coords.split)
+  #   end
+  #   print "#{@user_board.render(true)}"
+  # end
 
   def player_placement
-    cruiser   = Ship.new("cruiser", 3)
-    submarine = Ship.new("submarine", 2)
     # need a valid coords check?
-    coords = placement_prompt(cruiser)
-    @user.place_ships(cruiser, coords)
+    coords = placement_prompt(@user.cruiser)
+    @user.place_ships(@user.cruiser, coords)
 
     print "#{@user_board.render(true)}"
 
-    coords = placement_prompt(submarine)
-    @user.place_ships(submarine, coords)
+    coords = placement_prompt(@user.submarine)
+    @user.place_ships(@user.submarine, coords)
 
     print "#{@user_board.render(true)}"
   end
@@ -55,14 +53,37 @@ class Game
     end
   end
 
+  def user_turn
+    print ">"
+    @computer.apply_user_shot(gets.chomp.upcase)
+    print "#{@computer_board.render}"
+  end
+
+
+  def computer_turn
+    print ">"
+    @user.apply_enemy_shot(@computer.take_random_shot)
+  end
+  
+  def play_game
+    until @user.user_ships_health == 0 || @computer.computer_ships_health == 0
+      user_turn
+      computer_turn
+    end
+  end
+
+  def computer_places_ships
+    @computer.place_ship(@computer.cruiser)
+    @computer.place_ship(@computer.submarine)
+  end
+
   def start
     puts "     Welcome to BATTLESHIP\nEnter p to play. Enter q to quit."
     print ">"
     play_game = gets.chomp.downcase
 
     if play_game == "p"
-      @computer.place_ship(Ship.new("Cruiser", 3))
-      @computer.place_ship(Ship.new("Submarine", 2))
+      computer_places_ships
       puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
       print "#{@user_board.render}"
       player_placement
