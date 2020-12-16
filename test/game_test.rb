@@ -19,7 +19,5 @@ class GameTest < Minitest::Test
     assert_instance_of Board, @game.computer_board
     assert_instance_of User, @game.user
     assert_instance_of Board, @game.user_board
-    # assert_instance_of Ship, @game.cruiser
-    # assert_instance_of Ship, @game.submarine
   end
 end
