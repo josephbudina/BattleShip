@@ -33,6 +33,6 @@ class UserTest < Minitest::Test
   end
 
   def test_user_ships_health_sums_health
-    assert_equal 5, @user.user_ships_health
+    assert_equal 5, @user.ships_health
   end
 end
