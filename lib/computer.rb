@@ -31,12 +31,6 @@ class Computer
     @board.place(ship, coordinates)
   end
 
-  # def apply_user_shot(coordinate)
-  #   if @board.valid_coordinate?(coordinate)
-  #     @board.cells[coordinate].fire_upon
-  #   end
-  # end
-
   def take_random_shot
     @available_coordinates.shuffle!.delete_at(0)
   end
