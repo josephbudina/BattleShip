@@ -31,4 +31,8 @@ class UserTest < Minitest::Test
     assert_equal true, @user.board.cells["A1"].fired_upon?
     assert_equal 2, @user.board.cells["A1"].ship.health
   end
+
+  def test_user_ships_health_sums_health
+    assert_equal 5, @user.ships_health
+  end
 end

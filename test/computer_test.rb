@@ -43,4 +43,18 @@ class ComputerTest < Minitest::Test
     assert_equal true, @computer.board.cells["A1"].fired_upon?
     assert_equal "M", @computer.board.cells["A1"].render
   end
+
+  def test_random_shots_are_valid
+    assert_equal true, @board.valid_coordinate?(@computer.take_random_shot)
+
+    assert_equal 15, @computer.available_coordinates.length
+  end
+
+  def test_it_sums_computer_health
+    assert_equal 5, @computer.ships_health
+
+    @computer.cruiser.hit
+
+    assert_equal 4, @computer.ships_health
+  end
 end
