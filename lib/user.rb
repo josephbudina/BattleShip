@@ -1,4 +1,7 @@
+require './lib/player'
+
 class User
+  include Player
   attr_accessor :board
 
   attr_reader   :cruiser,
@@ -26,9 +29,9 @@ class User
     end
   end
 
-  def user_ships_health
-    @ships.sum do |ship|
-      ship.health
-    end
-  end
+  # def user_ships_health
+  #   @ships.sum do |ship|
+  #     ship.health
+  #   end
+  # end
 end
