@@ -79,7 +79,7 @@ class Game
     coordinate = gets.chomp.upcase
     if @computer_board.valid_coordinate?(coordinate)
       fired_upon_coordinate(coordinate)
-      @computer.apply_user_shot(coordinate)
+      @computer.apply_shot(coordinate)
       inform_player_shots(coordinate)
     elsif @computer_board.valid_coordinate?(coordinate) == false
       print "Invalid coordinate, try again!\n"
@@ -90,7 +90,7 @@ class Game
   def computer_turn
     print ">"
     comp_shot = @computer.take_random_shot
-    @user.apply_enemy_shot(comp_shot)
+    @user.apply_shot(comp_shot)
     inform_computer_shots(comp_shot)
   end
 

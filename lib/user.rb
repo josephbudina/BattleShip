@@ -23,9 +23,9 @@ class User
     end
   end
 
-  def apply_enemy_shot(coordinate)
-    if @board.valid_coordinate?(coordinate)
-      @board.cells[coordinate].fire_upon
-    end
-  end
+  # def apply_enemy_shot(coordinate)
+  #   if @board.valid_coordinate?(coordinate)
+  #     @board.cells[coordinate].fire_upon
+  #   end
+  # end
 end

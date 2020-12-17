@@ -24,9 +24,9 @@ class UserTest < Minitest::Test
   end
 
   def test_it_applies_enemy_shot
-    assert_equal true, @user.apply_enemy_shot("A1")
+    assert_equal true, @user.apply_shot("A1")
     @user.place_ships(@cruiser, ["A1", "B1", "C1"])
-    @user.apply_enemy_shot("A1")
+    @user.apply_shot("A1")
 
     assert_equal true, @user.board.cells["A1"].fired_upon?
     assert_equal 2, @user.board.cells["A1"].ship.health
