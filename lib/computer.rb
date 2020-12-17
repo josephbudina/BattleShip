@@ -1,4 +1,7 @@
+require './lib/player'
+
 class Computer
+  include Player
   attr_accessor :board
 
   attr_reader   :cruiser,
@@ -36,11 +39,5 @@ class Computer
 
   def take_random_shot
     @available_coordinates.shuffle!.delete_at(0)
-  end
-
-  def computer_ships_health
-    @ships.sum do |ship|
-      ship.health
-    end
   end
 end
