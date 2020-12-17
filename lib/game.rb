@@ -2,16 +2,43 @@ require './lib/computer'
 require './lib/user'
 
 class Game
-    attr_reader :computer,
-                :computer_board,
-                :user,
-                :user_board
+  attr_reader :computer,
+              :computer_board,
+              :user,
+              :user_board
 
   def initialize
     @user_board = Board.new
     @computer_board = Board.new
     @computer = Computer.new(@computer_board)
     @user = User.new(@user_board)
+  end
+  
+  def start
+    puts "     Welcome to BATTLESHIP\nEnter p to play. Enter q to quit."
+    print ">"
+    play_game = gets.chomp.downcase
+  
+    if play_game == "q"
+      puts "TERMINATING SESSION"
+    else
+      computer_places_ships
+      puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
+      print "#{@user_board.render}"
+      player_placement
+    end
+  end
+  
+  def play_game
+    until @user.ships_health == 0 || @computer.ships_health == 0
+      user_turn
+      print " --- Enemy Board ---\n"
+      print "#{@computer_board.render}"
+      computer_turn
+      print " ---  Your Board ---\n"
+      print "#{@user_board.render(true)}"
+    end
+    declare_winner
   end
 
   def player_placement
@@ -58,7 +85,6 @@ class Game
     end
   end
 
-
   def computer_turn
     print ">"
     comp_shot = @computer.take_random_shot
@@ -75,36 +101,9 @@ class Game
     start
   end
 
-  def play_game
-    until @user.ships_health == 0 || @computer.ships_health == 0
-      user_turn
-      print " --- Enemy Board ---\n"
-      print "#{@computer_board.render}"
-      computer_turn
-      print " ---  Your Board ---\n"
-      print "#{@user_board.render(true)}"
-    end
-    declare_winner
-  end
-
   def computer_places_ships
     @computer.place_ship(@computer.cruiser)
     @computer.place_ship(@computer.submarine)
-  end
-
-  def start
-    puts "     Welcome to BATTLESHIP\nEnter p to play. Enter q to quit."
-    print ">"
-    play_game = gets.chomp.downcase
-
-    if play_game == "q"
-      puts "TERMINATING SESSION"
-    else
-      computer_places_ships
-      puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
-      print "#{@user_board.render}"
-      player_placement
-    end
   end
 
   def inform_player_shots(coordinate)

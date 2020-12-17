@@ -28,10 +28,4 @@ class User
       @board.cells[coordinate].fire_upon
     end
   end
-
-  # def user_ships_health
-  #   @ships.sum do |ship|
-  #     ship.health
-  #   end
-  # end
 end
