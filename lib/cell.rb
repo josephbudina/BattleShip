@@ -38,7 +38,7 @@ class Cell
       "M"
     elsif fired_upon? && @ship.sunk? == false
       "H"
-    else
+    elsif @ship.sunk? == true
       "X"
     end
   end
