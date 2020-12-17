@@ -34,9 +34,11 @@ class Game
       user_turn
       print " --- Enemy Board ---\n"
       print "#{@computer_board.render}"
+      sleep(1)
       computer_turn
       print " ---  Your Board ---\n"
       print "#{@user_board.render(true)}"
+      sleep(1)
     end
     declare_winner
   end
