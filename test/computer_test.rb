@@ -36,9 +36,9 @@ class ComputerTest < Minitest::Test
   end
 
   def test_it_applies_user_shot
-    assert_equal true, @computer.apply_user_shot("A1")
+    assert_equal true, @computer.apply_shot("A1")
     @computer.place_ship(@cruiser)
-    @computer.apply_user_shot("A1")
+    @computer.apply_shot("A1")
 
     assert_equal true, @computer.board.cells["A1"].fired_upon?
     assert_equal "M", @computer.board.cells["A1"].render
