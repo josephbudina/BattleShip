@@ -15,7 +15,6 @@ class Game
   end
 
   def player_placement
-    # need a valid coords check?
     coords = placement_prompt(@user.cruiser)
     @user.place_ships(@user.cruiser, coords)
 
@@ -39,12 +38,20 @@ class Game
     end
   end
 
+  def fired_upon_coordinate(coordinate)
+    if @computer_board.cells[coordinate].fired_upon?
+      print "ALREADY FIRED ON #{coordinate}\n"
+    end
+  end
+
   def user_turn
     print "Enter coordinate to fire on enemy!\n"
     print ">"
     coordinate = gets.chomp.upcase
     if @computer_board.valid_coordinate?(coordinate)
+      fired_upon_coordinate(coordinate)
       @computer.apply_user_shot(coordinate)
+      inform_player_shots(coordinate)
     elsif @computer_board.valid_coordinate?(coordinate) == false
       print "Invalid coordinate, try again!\n"
       user_turn
@@ -54,20 +61,22 @@ class Game
 
   def computer_turn
     print ">"
-    @user.apply_enemy_shot(@computer.take_random_shot)
+    comp_shot = @computer.take_random_shot
+    @user.apply_enemy_shot(comp_shot)
+    inform_computer_shots(comp_shot)
   end
 
   def declare_winner
-    if @user.user_ships_health == 0
-      print "Game Over! All player ships sunk! Computer wins!\n\n"
-    elsif @computer.computer_ships_health == 0
+    if @user.ships_health == 0
+      print "Game Over! All your ships were sunk! Computer wins!\n\n"
+    elsif @computer.ships_health == 0
       print "Game Over! All enemy ships sunk! You win!\n\n"
     end
     start
   end
 
   def play_game
-    until @user.user_ships_health == 0 || @computer.computer_ships_health == 0
+    until @user.ships_health == 0 || @computer.ships_health == 0
       user_turn
       print " --- Enemy Board ---\n"
       print "#{@computer_board.render}"
@@ -95,6 +104,26 @@ class Game
       puts "I have laid out my ships on the grid.\nYou now need to lay out your two ships.\nThe Cruiser is three units long and the Submarine is two units long."
       print "#{@user_board.render}"
       player_placement
+    end
+  end
+
+  def inform_player_shots(coordinate)
+    if @computer_board.cells[coordinate].render == "M"
+      print "YOUR SHOT AT #{coordinate} WAS A MISS!\n"
+    elsif @computer_board.cells[coordinate].render == "H"
+      print "YOUR SHOT AT #{coordinate} WAS A HIT!\n"
+    elsif @computer_board.cells[coordinate].render == "X"
+      print "YOU SUNK THAT SHIP AT #{coordinate}!\n"
+    end
+  end
+
+  def inform_computer_shots(coordinate)
+    if @user_board.cells[coordinate].render == "M"
+      print "COMPUTER SHOT AT #{coordinate} WAS A MISS!\n"
+    elsif @user_board.cells[coordinate].render == "H"
+      print "COMPUTER SHOT AT #{coordinate} WAS A HIT! Okay job.\n"
+    elsif @user_board.cells[coordinate].render == "X"
+      print "COMPUTER SUNK YOUR SHIP AT #{coordinate}!\n"
     end
   end
 end
